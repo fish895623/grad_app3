@@ -42,12 +42,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 tv.setText(response);
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }) {
+        }, error -> {}) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
