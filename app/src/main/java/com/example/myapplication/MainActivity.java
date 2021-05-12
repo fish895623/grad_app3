@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         btnSend = findViewById(R.id.btnSend);
 
         queue = Volley.newRequestQueue(this);
-        String url = "https://23cfab1d3503.ngrok.io/transformer/post";
+        String url = "http://oreopie.ipdisk.co.kr:5000/transformer/post";
 
         final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
