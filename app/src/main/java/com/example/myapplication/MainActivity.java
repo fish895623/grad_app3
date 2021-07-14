@@ -6,12 +6,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
+import com.android.volley.*;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.*;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     btnSend = findViewById(R.id.btnSend);
 
     queue = Volley.newRequestQueue(this);
-    String url = "http://oreopie.ipdisk.co.kr:5000/transformer/post";
+    String url = "http://192.168.0.3:5000/";
 
     final StringRequest stringRequest =
         new StringRequest(
@@ -41,7 +40,11 @@ public class MainActivity extends AppCompatActivity {
             new Response.Listener<String>() {
               @Override
               public void onResponse(String response) {
-                tv.setText(response);
+                JsonElement jsonElement =
+                    new JsonParser().parseString(response); // "{\"sentence\": \"asdf\"}"
+                JsonData jsonData = new Gson().fromJson(response, JsonData.class);
+
+                tv.setText(jsonData.getSentence());
               }
             },
             error -> {}) {
@@ -52,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
             return params;
           }
         };
-
     stringRequest.setTag(TAG);
 
     btnSend.setOnClickListener(
