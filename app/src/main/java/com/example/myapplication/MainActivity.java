@@ -1,20 +1,17 @@
 package com.example.myapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
+import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,29 +34,34 @@ public class MainActivity extends AppCompatActivity {
     queue = Volley.newRequestQueue(this);
     String url = "http://oreopie.ipdisk.co.kr:5000/transformer/post";
 
-    final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-      @Override
-      public void onResponse(String response) {
-        tv.setText(response);
-      }
-    }, error -> {
-    }) {
-      @Override
-      protected Map<String, String> getParams() throws AuthFailureError {
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("sentence", sentenceBox.getText().toString());
-        return params;
-      }
-    };
+    final StringRequest stringRequest =
+        new StringRequest(
+            Request.Method.POST,
+            url,
+            new Response.Listener<String>() {
+              @Override
+              public void onResponse(String response) {
+                tv.setText(response);
+              }
+            },
+            error -> {}) {
+          @Override
+          protected Map<String, String> getParams() throws AuthFailureError {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("sentence", sentenceBox.getText().toString());
+            return params;
+          }
+        };
 
     stringRequest.setTag(TAG);
 
-    btnSend.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        queue.add(stringRequest);
-      }
-    });
+    btnSend.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            queue.add(stringRequest);
+          }
+        });
   }
 
   @Override
