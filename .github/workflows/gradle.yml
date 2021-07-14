@@ -22,6 +22,7 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
+
     - name: Google Java Format
       uses: axel-op/googlejavaformat-action@v3.4.0
       with:
