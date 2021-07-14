@@ -3,8 +3,7 @@
 
 name: Java CI with Gradle
 
-on:
-  pull_request:
+on: [push, pull_request]
 
 jobs:
   build:
@@ -12,6 +11,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: axel-op/googlejavaformat-action@v3
+    - name: Run java checkstyle
+      # You may pin to the exact commit or the version.
+      # uses: nikitasavinov/checkstyle-action@36b69f4cd04e8ee165c046237702fb1b68b1a89f
+      uses: nikitasavinov/checkstyle-action@0.4.0
+
     - uses: actions/checkout@v2
     - name: Set up JDK 11
       uses: actions/setup-java@v2
@@ -21,9 +26,4 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
-      run: ./gradlew build
-
-    - name: Run java checkstyle
-      # You may pin to the exact commit or the version.
-      # uses: nikitasavinov/checkstyle-action@36b69f4cd04e8ee165c046237702fb1b68b1a89f
-      uses: nikitasavinov/checkstyle-action@0.4.0
+      run: ./gradlew build   
