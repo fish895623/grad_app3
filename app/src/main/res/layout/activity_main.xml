@@ -11,19 +11,19 @@
             android:id="@+id/sentence"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Sentence please" />
+            android:hint="@string/sentence_please" android:inputType="text" android:autofillHints=""/>
 
     <Button
             android:id="@+id/btnSend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="send form" />
+            android:text="@string/send_form" />
 
     <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="This is text."
+            android:text="@string/this_is_text"
             android:id="@+id/tvMain"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

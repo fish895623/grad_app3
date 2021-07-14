@@ -40,8 +40,6 @@ public class MainActivity extends AppCompatActivity {
             new Response.Listener<String>() {
               @Override
               public void onResponse(String response) {
-                JsonElement jsonElement =
-                    new JsonParser().parseString(response); // "{\"sentence\": \"asdf\"}"
                 JsonData jsonData = new Gson().fromJson(response, JsonData.class);
 
                 tv.setText(jsonData.getSentence());
