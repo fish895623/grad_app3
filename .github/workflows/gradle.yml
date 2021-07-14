@@ -15,7 +15,8 @@ jobs:
           java-version: "11"
       - uses: axel-op/googlejavaformat-action@v3.4.0
         with:
-          files: "**/*.java"
+#           files: "**/*.java"
+          args: "--skip-sorting-imports --replace"
       - name: Run java checkstyle
         uses: nikitasavinov/checkstyle-action@0.4.0
   build:
