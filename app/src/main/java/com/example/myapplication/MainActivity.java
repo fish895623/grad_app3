@@ -6,14 +6,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
+import com.android.volley.*;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.android.volley.VolleyLog.setTag;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,36 +32,39 @@ public class MainActivity extends AppCompatActivity {
     btnSend = findViewById(R.id.btnSend);
 
     queue = Volley.newRequestQueue(this);
-    String url = "http://oreopie.ipdisk.co.kr:5000/transformer/post";
+//    String url = "https://dummy.restapiexample.com/api/v1/create";
+    String url="http://192.168.0.3:5000/";
 
     final StringRequest stringRequest =
-        new StringRequest(
-            Request.Method.POST,
-            url,
-            new Response.Listener<String>() {
+            new StringRequest(
+                    Request.Method.POST,
+                    url,
+                    new Response.Listener<String>() {
+                      @Override
+                      public void onResponse(String response) {
+                        System.out.println(response);
+                        tv.setText(response);
+                      }
+                    },
+                    error -> {
+                    }) {
               @Override
-              public void onResponse(String response) {
-                tv.setText(response);
+              protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("sentence", sentenceBox.getText().toString());
+                return params;
               }
-            },
-            error -> {}) {
-          @Override
-          protected Map<String, String> getParams() throws AuthFailureError {
-            Map<String, String> params = new HashMap<String, String>();
-            params.put("sentence", sentenceBox.getText().toString());
-            return params;
-          }
-        };
+            };
+    stringRequest            .setTag(TAG);
 
-    stringRequest.setTag(TAG);
 
     btnSend.setOnClickListener(
-        new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            queue.add(stringRequest);
-          }
-        });
+            new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                queue.add(stringRequest);
+              }
+            });
   }
 
   @Override
