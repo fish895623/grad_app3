@@ -7,15 +7,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.*;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.*;
 
-import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
   private EditText sentenceBox;
   private Button btnSend;
   private RequestQueue queue;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -42,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
             new Response.Listener<String>() {
               @Override
               public void onResponse(String response) {
-                JsonElement jsonElement = new JsonParser().parseString(response);//"{\"sentence\": \"asdf\"}"
+                JsonElement jsonElement =
+                    new JsonParser().parseString(response); // "{\"sentence\": \"asdf\"}"
                 JsonData jsonData = new Gson().fromJson(response, JsonData.class);
 
                 tv.setText(jsonData.getSentence());
