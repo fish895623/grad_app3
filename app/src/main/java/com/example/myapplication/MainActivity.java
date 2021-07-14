@@ -13,7 +13,6 @@ import com.android.volley.toolbox.Volley;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.android.volley.VolleyLog.setTag;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,39 +31,37 @@ public class MainActivity extends AppCompatActivity {
     btnSend = findViewById(R.id.btnSend);
 
     queue = Volley.newRequestQueue(this);
-//    String url = "https://dummy.restapiexample.com/api/v1/create";
-    String url="http://192.168.0.3:5000/";
+    //    String url = "https://dummy.restapiexample.com/api/v1/create";
+    String url = "http://192.168.0.3:5000/";
 
     final StringRequest stringRequest =
-            new StringRequest(
-                    Request.Method.POST,
-                    url,
-                    new Response.Listener<String>() {
-                      @Override
-                      public void onResponse(String response) {
-                        System.out.println(response);
-                        tv.setText(response);
-                      }
-                    },
-                    error -> {
-                    }) {
+        new StringRequest(
+            Request.Method.POST,
+            url,
+            new Response.Listener<String>() {
               @Override
-              protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("sentence", sentenceBox.getText().toString());
-                return params;
+              public void onResponse(String response) {
+                System.out.println(response);
+                tv.setText(response);
               }
-            };
-    stringRequest            .setTag(TAG);
-
+            },
+            error -> {}) {
+          @Override
+          protected Map<String, String> getParams() throws AuthFailureError {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("sentence", sentenceBox.getText().toString());
+            return params;
+          }
+        };
+    stringRequest.setTag(TAG);
 
     btnSend.setOnClickListener(
-            new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                queue.add(stringRequest);
-              }
-            });
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            queue.add(stringRequest);
+          }
+        });
   }
 
   @Override

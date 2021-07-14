@@ -5,8 +5,7 @@ public class MyTools {
     StringBuffer stringBuffer = new StringBuffer();
     String text = "";
     for (int i = 1; i < UnicodeStr.length(); i++) {
-      if ('\\' == UnicodeStr.charAt(i)
-              && 'u' == UnicodeStr.charAt(i + 1)) {
+      if ('\\' == UnicodeStr.charAt(i) && 'u' == UnicodeStr.charAt(i + 1)) {
         Character c = (char) Integer.parseInt(UnicodeStr.substring(1 + 2, i + 6), 16);
         stringBuffer.append(c);
         i += 5;
@@ -16,6 +15,7 @@ public class MyTools {
     }
     return stringBuffer.toString();
   }
+
   private static String StringToUnicode(String val) {
     StringBuffer sb = new StringBuffer();
     for (int i = 0; i < val.length(); i++) {
