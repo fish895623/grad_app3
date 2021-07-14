@@ -25,6 +25,3 @@ jobs:
 
     - name: Google Java Format
       uses: axel-op/googlejavaformat-action@v3.4.0
-      with:
-        commitMessage: Auto Formatting
-
