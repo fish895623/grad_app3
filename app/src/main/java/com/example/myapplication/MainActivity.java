@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     btnSend = findViewById(R.id.btnSend);
 
     queue = Volley.newRequestQueue(this);
-<<<<<<< Updated upstream
     String url = "http://oreopie.ipdisk.co.kr:5000/transformer/post";
 
     final StringRequest stringRequest =
@@ -63,33 +62,6 @@ public class MainActivity extends AppCompatActivity {
             queue.add(stringRequest);
           }
         });
-=======
-    String url = "http://192.168.0.2:3000/cgi-bin/index.py";
-
-    final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-      @Override
-      public void onResponse(String response) {
-        tv.setText(response);
-      }
-    }, error -> {
-    }) {
-      @Override
-      protected Map<String, String> getParams() throws AuthFailureError {
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("sentence", sentenceBox.getText().toString());
-        return params;
-      }
-    };
-
-    stringRequest.setTag(TAG);
-
-    btnSend.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        queue.add(stringRequest);
-      }
-    });
->>>>>>> Stashed changes
   }
 
   @Override
@@ -99,8 +71,4 @@ public class MainActivity extends AppCompatActivity {
       queue.cancelAll(TAG);
     }
   }
-<<<<<<< Updated upstream
 }
-=======
-}
->>>>>>> Stashed changes
