@@ -30,10 +30,10 @@ public class MainActivity extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-    tv = findViewById(R.id.tvMain);
-    sentenceBox = findViewById(R.id.sentence);
-    Button btnSend = findViewById(R.id.btnSend);
+    setContentView(R.layout.main);
+    tv = findViewById(R.id.transformerView);
+    sentenceBox = findViewById(R.id.sentenceInput);
+    Button btnSend = findViewById(R.id.button);
 
     queue = Volley.newRequestQueue(this);
     String url = "http://192.168.0.24:5000/transformer/post";
