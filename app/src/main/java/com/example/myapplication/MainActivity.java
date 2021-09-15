@@ -1,25 +1,30 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
-import com.android.volley.*;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.*;
+import com.google.gson.Gson;
 
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
   private static final String TAG = "MAIN";
+  static Gson gson = new Gson();
+  static JsonData jsonData = gson.fromJson("{}", JsonData.class);
   private TextView tv;
   private EditText sentenceBox;
-  private Button btnSend;
   private RequestQueue queue;
 
   @Override
@@ -28,39 +33,42 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
     tv = findViewById(R.id.tvMain);
     sentenceBox = findViewById(R.id.sentence);
-    btnSend = findViewById(R.id.btnSend);
+    Button btnSend = findViewById(R.id.btnSend);
 
     queue = Volley.newRequestQueue(this);
-    String url = "http://192.168.0.3:5000/";
+    String url = "http://192.168.0.24:5000/transformer/post";
 
     final StringRequest stringRequest =
         new StringRequest(
             Request.Method.POST,
             url,
-            new Response.Listener<String>() {
-              @Override
-              public void onResponse(String response) {
-                JsonData jsonData = new Gson().fromJson(response, JsonData.class);
-
-                tv.setText(jsonData.getSentence());
-              }
+            response -> {
+              jsonData = new Gson().fromJson(response, JsonData.class);
+              Log.i(TAG + "RESPONSE", gson.toJson(jsonData));
+              tv.setText(jsonData.getTransformer());
             },
-            error -> {}) {
+            error -> {
+            }) {
           @Override
-          protected Map<String, String> getParams() throws AuthFailureError {
-            Map<String, String> params = new HashMap<String, String>();
-            params.put("sentence", sentenceBox.getText().toString());
-            return params;
+          public byte[] getBody() {
+            jsonData.setSentence(sentenceBox.getText().toString());
+            Log.i(TAG, gson.toJson(jsonData));
+            return gson.toJson(jsonData).getBytes(StandardCharsets.UTF_8);
+          }
+
+          @Override
+          public Map<String, String> getHeaders() {
+            HashMap<String, String> headers = new HashMap<>();
+            headers.put("Content-Type", "application/json; charset=utf-8");
+            return headers;
           }
         };
     stringRequest.setTag(TAG);
 
     btnSend.setOnClickListener(
-        new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            queue.add(stringRequest);
-          }
+        v -> {
+          tv.setText("");
+          queue.add(stringRequest);
         });
   }
 
